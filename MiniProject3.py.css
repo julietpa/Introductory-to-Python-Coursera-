@@ -1,0 +1,97 @@
+#Juliet's "Guess the number" mini-project
+# Note that all output for the game will be printed in the console
+
+import simplegui
+import random
+
+
+# helper function to start and restart the game
+def new_game():
+    # initialize global variables used in your code here
+    global secret_num
+    global num_range 
+    num_range = 100
+    global guesses_left
+    guesses_left = 7
+
+    #how to restart the game.
+    print "New game, Range is from 0 to 100. Good Luck!"
+    print "Number of guesses remaining is", guesses_left
+    secret_num = random.randrange(0, 100)
+    
+    pass
+
+
+# define event handlers for control panel
+def range100():
+    # button that changes the range to [0,100) and starts a new game 
+    print " " 
+    new_game()
+    
+    pass
+   
+    
+def range1000():
+    # button that changes the range to [0,1000) and starts a new game 
+    print " "
+    global secret_num
+    global num_range
+    num_range = 1000
+    global guesses_left
+    guesses_left = 10
+    print "New game, Range is from 0 to 1000. Good Luck!"
+    print "Number of guesses remaining is", guesses_left
+    secret_num = random.randrange(0, 100)
+    new_game
+    
+    pass
+ 
+
+def input_guess(guess):
+    # main game logic goes here	
+    global guesses_left
+    global secret_num
+    Guess = int(guess)   #changing string to integer
+    print " "
+    print "Guess was", Guess
+    guesses_left = guesses_left - 1 
+    print "Number of guesses remaining is", guesses_left
+    if Guess == secret_num:
+        print "Correct, you got it right!"
+        print ""
+        new_game()
+        return
+#If game says correct, it will restart immediately
+    elif Guess > secret_num:
+        print "Lower!"
+    elif Guess < secret_num:
+        print "Higher!"
+#If run out of guesses, game will also restart:
+
+    if guesses_left == 0:
+        print "Game over. You didn't guess the correct number in time."
+        print ""
+        new_game()
+        return
+    pass
+    
+
+# create frame
+f = simplegui.create_frame("Guess the number", 200, 200)
+f.set_canvas_background ("Pink")
+
+# register event handlers for control elements and start frame
+f.add_button("Range is ([0, 100)", range100, 200)
+f.add_button("Range is ([0, 1000)",range1000, 200)
+f.add_input("Enter a guess", input_guess, 200)
+
+
+# call new_game 
+new_game()
+f.start()
+
+
+# always remember to check your completed program against the grading rubric
+
+
+
